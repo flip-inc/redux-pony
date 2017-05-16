@@ -22,10 +22,10 @@ function success(config, current, records) {
   let mergedOldRecords = _.keyBy(_.map(keyedOldRecords, (record) => {
     if (keyedNewRecords[record.serverId]) {
       delete keyedNewRecords[record.serverId][config.key];
-      return _.merge(keyedNewRecords[record.serverId], record);
+      return _.merge(record, keyedNewRecords[record.serverId]);
     }
 
-    return _.merge(keyedNewRecords[record[config.key]], record);
+    return _.merge(record, keyedNewRecords[record[config.key]]);
   }), config.key);
 
   // Create an array of all objects
