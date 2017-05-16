@@ -32,10 +32,10 @@ function success(config, current, records) {
   var mergedOldRecords = _lodash2.default.keyBy(_lodash2.default.map(keyedOldRecords, function (record) {
     if (keyedNewRecords[record.serverId]) {
       delete keyedNewRecords[record.serverId][config.key];
-      return _lodash2.default.merge(keyedNewRecords[record.serverId], record);
+      return _lodash2.default.merge(record, keyedNewRecords[record.serverId]);
     }
 
-    return _lodash2.default.merge(keyedNewRecords[record[config.key]], record);
+    return _lodash2.default.merge(record, keyedNewRecords[record[config.key]]);
   }), config.key);
 
   // Create an array of all objects
