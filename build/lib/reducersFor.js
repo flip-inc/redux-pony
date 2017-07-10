@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _assign2 = require('lodash/assign');
+
+var _assign3 = _interopRequireDefault(_assign2);
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _actionTypesFor = require('./actionTypesFor');
@@ -13,10 +17,6 @@ var _actionTypesFor2 = _interopRequireDefault(_actionTypesFor);
 var _seamlessImmutable = require('seamless-immutable');
 
 var _seamlessImmutable2 = _interopRequireDefault(_seamlessImmutable);
-
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
 
 var _success = require('./reducers/fetch/success');
 
@@ -88,7 +88,7 @@ function reducersFor(resourceName, args) {
 
   var modifiedState = {};
 
-  var config = _lodash2.default.assign(defaults, args);
+  var config = (0, _assign3.default)(defaults, args);
 
   return function reducers(state, action) {
     var originalState = state.asMutable ? state.asMutable({ deep: true }) : state;

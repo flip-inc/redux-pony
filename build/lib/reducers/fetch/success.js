@@ -4,9 +4,29 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
+var _compact2 = require('lodash/compact');
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _compact3 = _interopRequireDefault(_compact2);
+
+var _merge2 = require('lodash/merge');
+
+var _merge3 = _interopRequireDefault(_merge2);
+
+var _keyBy2 = require('lodash/keyBy');
+
+var _keyBy3 = _interopRequireDefault(_keyBy2);
+
+var _concat2 = require('lodash/concat');
+
+var _concat3 = _interopRequireDefault(_concat2);
+
+var _uniq2 = require('lodash/uniq');
+
+var _uniq3 = _interopRequireDefault(_uniq2);
+
+var _map2 = require('lodash/map');
+
+var _map3 = _interopRequireDefault(_map2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17,41 +37,41 @@ function success(config, current, records) {
   if (!records) throw new Error(reducerName + ': Expected records');
 
   // Merge an array of server keys
-  var currentKeys = _lodash2.default.map(current.recordsById, function (record) {
+  var currentKeys = (0, _map3.default)(current.recordsById, function (record) {
     if (record.serverId) return record.serverId;
     return record[config.key];
   });
-  var newKeys = _lodash2.default.map(records, config.key);
-  var allKeys = _lodash2.default.uniq(_lodash2.default.concat(currentKeys, newKeys));
+  var newKeys = (0, _map3.default)(records, config.key);
+  var allKeys = (0, _uniq3.default)((0, _concat3.default)(currentKeys, newKeys));
 
   // Prepare keyed records
-  var keyedNewRecords = _lodash2.default.keyBy(records, config.key);
+  var keyedNewRecords = (0, _keyBy3.default)(records, config.key);
   var keyedOldRecords = current.recordsById;
 
   // Merge old records with new ones, keeping in mind potential client created items
-  var mergedOldRecords = _lodash2.default.keyBy(_lodash2.default.map(keyedOldRecords, function (record) {
+  var mergedOldRecords = (0, _keyBy3.default)((0, _map3.default)(keyedOldRecords, function (record) {
     if (keyedNewRecords[record.serverId]) {
       delete keyedNewRecords[record.serverId][config.key];
-      return _lodash2.default.merge(record, keyedNewRecords[record.serverId]);
+      return (0, _merge3.default)(record, keyedNewRecords[record.serverId]);
     }
 
-    return _lodash2.default.merge(record, keyedNewRecords[record[config.key]]);
+    return (0, _merge3.default)(record, keyedNewRecords[record[config.key]]);
   }), config.key);
 
   // Create an array of all objects
-  var allRecords = _lodash2.default.map(allKeys, function (key) {
+  var allRecords = (0, _map3.default)(allKeys, function (key) {
     if (mergedOldRecords[key]) return mergedOldRecords[key];
 
     return keyedNewRecords[key];
   });
 
-  allRecords = _lodash2.default.compact(allRecords);
+  allRecords = (0, _compact3.default)(allRecords);
 
   // Prepare new state
   return {
     isLoading: false,
-    records: _lodash2.default.map(allRecords, config.key),
-    recordsById: _lodash2.default.keyBy(allRecords, config.key)
+    records: (0, _map3.default)(allRecords, config.key),
+    recordsById: (0, _keyBy3.default)(allRecords, config.key)
   };
 }
 

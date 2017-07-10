@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extend2 = require('lodash/extend');
+
+var _extend3 = _interopRequireDefault(_extend2);
+
 var _reduxCrud = require('redux-crud');
 
 var _reduxCrud2 = _interopRequireDefault(_reduxCrud);
-
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
 
 var _cuid = require('cuid');
 
@@ -175,6 +175,6 @@ var actionCreators = {
   }
 };
 
-actionCreators = _lodash2.default.extend(baseActionCreators, actionCreators);
+actionCreators = (0, _extend3.default)(baseActionCreators, actionCreators);
 
 exports.default = actionCreators;
